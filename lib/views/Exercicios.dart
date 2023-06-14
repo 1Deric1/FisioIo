@@ -1,7 +1,8 @@
 //import 'package:fisio/views/Login.dart';
 import 'package:flutter/material.dart';
-import 'package:teste_create_flutter/views/Cadastro.dart';
-import 'package:teste_create_flutter/views/Login.dart';
+import 'package:fisio/views/Cadastro.dart';
+import 'package:fisio/views/Login.dart';
+import 'package:fisio/views/AlterarDados.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Cadastro();
+                        return AlterarDados();
                       }));
                     }),
                 ListTile(
