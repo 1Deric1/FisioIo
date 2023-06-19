@@ -1,13 +1,32 @@
-import 'package:fisio/views/Login.dart';
+import 'package:fisio/pages/register/register_page.dart';
 import 'package:flutter/material.dart';
 
-    //final dbConnect = ConnectDb();
+import 'pages/home/Exercicios.dart';
+import 'pages/login/login_page.dart';
+import 'pages/recover_password/EsqueceuSenha.dart';
+import 'pages/updateRegister/AlterarDados.dart';
+
+final GlobalKey<NavigatorState> kGlobalKeyNavigator =
+    GlobalKey<NavigatorState>();
+
+final GlobalKey<ScaffoldMessengerState> kSnackbarKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 void main() async {
-    //WidgetsFlutterBinding.ensureInitialized();
-   //await dbConnect.connectionDataBase();
-  runApp(const MaterialApp(
+  runApp(MaterialApp(
     title: "Fis.IO",
-    home: Login(),
+    initialRoute: '/login',
+    routes: routes,
+    navigatorKey: kGlobalKeyNavigator,
     debugShowCheckedModeBanner: false,
+    scaffoldMessengerKey: kSnackbarKey,
   ));
 }
+
+Map<String, WidgetBuilder> routes = {
+  '/login': (_) => const LoginPage(),
+  '/register': (_) => const RegisterPage(),
+  '/updateRegister': (_) => const AlterarDados(),
+  '/recoverPassword': (_) => const EsqueceuSenha(),
+  '/home': (_) => const MyApp(),
+};
