@@ -1,3 +1,5 @@
+import 'package:fisio/services/navigator_service.dart';
+import 'package:fisio/services/sqlite_service.dart';
 import 'package:flutter/material.dart';
 
 class EsqueceuSenha extends StatefulWidget {
@@ -8,22 +10,22 @@ class EsqueceuSenha extends StatefulWidget {
 }
 
 class _EsqueceuSenhaState extends State<EsqueceuSenha> {
-  TextEditingController _controllerEmail = TextEditingController();
-  TextEditingController _controllerSenha = TextEditingController();
-  TextEditingController _controllerSenha01 = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerSenha = TextEditingController();
+  final TextEditingController _controllerSenha01 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     //Definindo imagem background do fundo do aplicativo
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 38, 14, 43),
-        title: Text('Esqueceu Senha'),
+        backgroundColor: const Color.fromARGB(255, 38, 14, 43),
+        title: const Text('Esqueceu Senha'),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16.0),
+            padding: const EdgeInsets.only(right: 16.0),
             child: Image.asset(
               'images/logo.png',
-              width:100,
+              width: 100,
               height: 100,
             ),
           ),
@@ -45,7 +47,7 @@ class _EsqueceuSenhaState extends State<EsqueceuSenha> {
               children: <Widget>[
                 //lista de widget
                 Padding(
-                  padding: EdgeInsets.only(bottom: 32),
+                  padding: const EdgeInsets.only(bottom: 32),
                   child: Image.asset(
                     "images/logo.png",
                     width: 200,
@@ -59,10 +61,11 @@ class _EsqueceuSenhaState extends State<EsqueceuSenha> {
                   autofocus: true, //foco inicial, onde o pursor aparece
                   keyboardType: TextInputType
                       .emailAddress, // aqui defini-se a configuração do teclado
-                  style: TextStyle(fontSize: 20), // stilo do texto
+                  style: const TextStyle(fontSize: 20), // stilo do texto
                   decoration: InputDecoration(
                       //decoração criando formatação do campo de texto layout
-                      contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16), //definição de diametro interno
+                      contentPadding: const EdgeInsets.fromLTRB(
+                          32, 16, 32, 16), //definição de diametro interno
                       hintText: "E-mail",
                       filled: true, //definindo campo
                       fillColor: Colors.white, //coloração
@@ -76,9 +79,9 @@ class _EsqueceuSenhaState extends State<EsqueceuSenha> {
                   obscureText:
                       true, //definindo que os caracteres não ficarão visiveis .. por ser campo de senha
                   keyboardType: TextInputType.text,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+                    contentPadding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
                     hintText: "Digite Sua Nova Senha",
                     filled: true,
                     fillColor: Colors.white,
@@ -92,9 +95,9 @@ class _EsqueceuSenhaState extends State<EsqueceuSenha> {
                   obscureText:
                       true, //definindo que os caracteres não ficarão visiveis .. por ser campo de senha
                   keyboardType: TextInputType.text,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+                    contentPadding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
                     hintText: "Confirme Sua Nova Senha",
                     filled: true,
                     fillColor: Colors.white,
@@ -103,18 +106,23 @@ class _EsqueceuSenhaState extends State<EsqueceuSenha> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 16, bottom: 10),
+                  padding: const EdgeInsets.only(top: 16, bottom: 10),
                   child: ElevatedButton(
-                    child: Text(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 205, 207, 55),
+                        padding: const EdgeInsets.fromLTRB(32, 16, 32, 16)),
+                    onPressed: () async {
+                      await SQLiteService().updateCustomerPassword(
+                        _controllerEmail.text,
+                        _controllerSenha.text,
+                      );
+                      KNavigator().popAndPushNamed('/home');
+                    },
+                    child: const Text(
                       "Cadastrar",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
-                    style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 205, 207, 55),
-                        padding: EdgeInsets.fromLTRB(32, 16, 32, 16)),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/login');
-                    },
                   ),
                 ),
               ],

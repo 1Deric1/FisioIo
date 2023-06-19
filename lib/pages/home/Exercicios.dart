@@ -1,10 +1,13 @@
 //import 'package:fisio/views/Login.dart';
+import 'dart:convert';
+
+import 'package:fisio/core/app_provider.dart';
+import 'package:fisio/services/navigator_service.dart';
 import 'package:flutter/material.dart';
-import 'package:fisio/views/Cadastro.dart';
-import 'package:fisio/views/Login.dart';
-import 'package:fisio/views/AlterarDados.dart';
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,54 +19,54 @@ class MyApp extends StatelessWidget {
                 child: Column(
               children: [
                 UserAccountsDrawerHeader(
-                    currentAccountPicture: Image.network(
-                        'https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg'),
-                    accountName: Text('Usuário: '),
-                    accountEmail: Text("Visualizar Perfil")),
+                    currentAccountPicture: currentCustomer?.image == null ||
+                            currentCustomer?.image == ''
+                        ? Image.network(
+                            'https://static.vecteezy.com/system/resources/previews/000/574/512/original/vector-sign-of-user-icon.jpg')
+                        : Image.memory(base64Decode(currentCustomer!.image!)),
+                    accountName:
+                        Text('Usuário: ${currentCustomer?.name ?? ''}'),
+                    accountEmail: Text(currentCustomer?.email ?? '')),
+                // ListTile(
+                //     leading: const Icon(
+                //       Icons.menu,
+                //       color: Color.fromARGB(255, 38, 14, 43),
+                //     ),
+                //     title: const Text('Menu Lateral'),
+                //     subtitle: const Text('Selecione a opção no Menu'),
+                //     onTap: () => print('clicou')),
                 ListTile(
-                    leading: Icon(
-                      Icons.menu,
-                      color: Color.fromARGB(255, 38, 14, 43),
-                    ),
-                    title: Text('Menu Lateral'),
-                    subtitle: Text('Selecione a opção no Menu'),
-                    onTap: () => print('clicou')),
-                ListTile(
-                    leading: Icon(
+                    leading: const Icon(
                       Icons.edit,
                       color: Color.fromARGB(255, 38, 14, 43),
                     ),
-                    title: Text('Editar Cadastro'),
-                    subtitle: Text(''),
+                    title: const Text('Editar Cadastro'),
+                    subtitle: const Text(''),
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return AlterarDados();
-                      }));
+                      KNavigator(arguments: true).pushNamed(
+                        '/updateRegister',
+                      );
                     }),
                 ListTile(
-                    leading: Icon(
+                    leading: const Icon(
                       Icons.exit_to_app,
                       color: Color.fromARGB(255, 38, 14, 43),
                     ),
-                    title: Text('SAIR'),
-                    subtitle: Text(''),
+                    title: const Text('SAIR'),
+                    subtitle: const Text(''),
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Login();
-                      }));
+                      KNavigator().popAndPushNamed('/login');
                     }),
               ],
             )),
             appBar: AppBar(
-              backgroundColor: Color.fromARGB(255, 38, 14, 43),
+              backgroundColor: const Color.fromARGB(255, 38, 14, 43),
               //Icone Navebar
 
               //Imagem Logo
               actions: [
                 Padding(
-                  padding: EdgeInsets.only(right: 16.0),
+                  padding: const EdgeInsets.only(right: 16.0),
                   child: Image.asset(
                     'images/logo.png',
                     width: 100,
@@ -75,7 +78,7 @@ class MyApp extends StatelessWidget {
 
             //Coloração Tela
             body: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -90,8 +93,8 @@ class MyApp extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(32.0),
+                    const Padding(
+                      padding: EdgeInsets.all(32.0),
                       child: Text(
                         'Olá, Queli!',
                         style: TextStyle(
@@ -106,7 +109,7 @@ class MyApp extends StatelessWidget {
 
                     Center(
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 32),
+                        padding: const EdgeInsets.only(bottom: 32),
                         child: Image.asset(
                           "images/Alongamento-editado.png",
                           color: Colors.white,
@@ -131,7 +134,7 @@ class MyApp extends StatelessWidget {
                         ),
 
                         //Texto Topo Conteiner
-                        Positioned.fill(
+                        const Positioned.fill(
                           child: Align(
                             alignment: Alignment.topCenter,
                             child: Padding(
@@ -168,13 +171,12 @@ class MyApp extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: Padding(
-                              padding: EdgeInsets.only(bottom: 16),
+                              padding: const EdgeInsets.only(bottom: 16),
                               child: TextButton(
-                                child: Text(
+                                child: const Text(
                                   "Clique para ver mais",
                                   style: TextStyle(
-                                      color: const Color.fromARGB(
-                                          255, 255, 255, 255),
+                                      color: Color.fromARGB(255, 255, 255, 255),
                                       fontSize: 12),
                                 ),
                                 onPressed: () {
